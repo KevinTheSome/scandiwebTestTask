@@ -1,0 +1,16 @@
+{
+    "name": "kevin/backend",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kevins Markuss Kanalis",
+            "email": "KevinsKanalis@gmail.com"
+        }
+    ],
+    "require": {}
+}
