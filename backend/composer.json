@@ -12,5 +12,7 @@
             "email": "KevinsKanalis@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "webonyx/graphql-php": "^15.20"
+    }
 }

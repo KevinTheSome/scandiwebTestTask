@@ -1,9 +1,13 @@
 <?php
 
-use Src\Test;
+use Src\controllers\DotEnvController;
+use Src\Router;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-var_dump(class_exists('Src\Test'));
+(new DotEnvController)->load(__DIR__ . '/../');
+(new Router);
 
-(new Test());
+// example of using environment variables remeber
+// echo getenv('TEST');
+// echo $_ENV['TEST'];
