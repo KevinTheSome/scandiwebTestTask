@@ -4,7 +4,6 @@ namespace Src\controllers;
 
 class DotEnvController
 {
-
     public function load($path): void
     {
         $lines = file($path . '/.env');

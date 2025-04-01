@@ -7,18 +7,18 @@ use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use Src\model\Model;
 
-
-class Currency extends Model
+class AttributeModel extends Model
 {
     protected $table = 'attributes';
 
     public function getType()
     {
         return new ObjectType([
-            'name' => 'Currency',
+            'name' => 'Attribute',
             'fields' => [
-                'label' => Type::string(),
-                'symbol' => Type::string(),
+                'displayValue' => Type::string(),
+                'value' => Type::string(),
+                'id' => Type::string(),
                 '__typename' => Type::string(),
             ]
         ]);

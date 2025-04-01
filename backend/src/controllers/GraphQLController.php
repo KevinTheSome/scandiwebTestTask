@@ -7,14 +7,16 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use GraphQL\Type\SchemaConfig;
-use Src\model\Category;
-use Src\model\Product;
+use Src\model\CategoryModel;
+use Src\controllers\CategoryController;
+use Src\model\ProductModel;
 
 class GraphQLController extends Controller
 {
     protected $db;
     private $queryType;
     private $mutationType;
+
 
     public function __construct()
     {
@@ -24,27 +26,17 @@ class GraphQLController extends Controller
             'name' => 'Query',
             'fields' => [
                 'categories' => [
-                    'type' => Type::listOf((new Category)->getType()),
+                    'type' => Type::listOf((new CategoryModel)->getType()),
                     'args' => [
                         'name' => ['type' => Type::string()]
                     ],
-                    'resolve' => function ($root, $args) {
-                        return array_filter($root['data']['categories'], function ($category) use ($args) {
-                            return empty($args['name']) || $category['name'] === $args['name'];
-                        });
+                    // 'resolve' => function (array $root, array $args) {
+                    //     return (new CategoryController())->get($args['name']);
+                    // }
+                    'resolve' => function ($root, array $args) {
+                        return (new CategoryController())->get($args['name']);
                     }
                 ],
-                'products' => [
-                    'type' => Type::listOf((new Product)->getType()),
-                    'args' => [
-                        'category' => ['type' => Type::string()]
-                    ],
-                    'resolve' => function ($root, $args) {
-                        return array_filter($root['data']['products'], function ($product) use ($args) {
-                            return empty($args['category']) || $product['category'] === $args['category'];
-                        });
-                    }
-                ]
             ]
         ]);
 
@@ -65,33 +57,26 @@ class GraphQLController extends Controller
 
     public function graphql()
     {
+        header('Content-Type: application/json; charset=UTF-8');
 
-        try {
-            // See docs on schema options:
-            // https://webonyx.github.io/graphql-php/schema-definition/#configuration-options
-            $schema = new Schema([
-                'query' => $this->queryType,
-                'mutation' => $this->mutationType,
-                'typeLoader' => static fn($type): ?ObjectType => (new $type)->getType()
-            ]);
-
-            $input = json_decode($_POST['query'], true);
-
-            $query = $input['query'];
-            $variableValues = $input['variables'] ?? null;
-
-            $rootValue = ['prefix' => 'You said: '];
-            $result = GraphQL::executeQuery($schema, $query, $rootValue, null, $variableValues);
-            $output = $result->toArray();
-        } catch (\Throwable $e) {
-            $output = [
-                'error' => [
-                    'message' => $e->getMessage(),
-                ],
-            ];
+        if (empty($_POST['query'])) //check if the request has a GraphQL query
+        {
+            echo json_encode(['error' => ['message' => 'No GraphQL query found in the HTTP request']], JSON_THROW_ON_ERROR);
+            die();
         }
 
-        header('Content-Type: application/json; charset=UTF-8');
-        return json_encode($output, JSON_THROW_ON_ERROR);
+        $schema = new Schema([
+            'query' => $this->queryType,
+            'mutation' => $this->mutationType,
+        ]);
+
+        $query = strval($_POST['query']);
+
+        $result = GraphQL::executeQuery($schema, $query);
+        $output = $result->toArray();
+
+
+
+        echo json_encode($output, JSON_THROW_ON_ERROR);
     }
 }

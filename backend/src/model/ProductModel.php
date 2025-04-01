@@ -6,10 +6,10 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use Src\model\Model;
-use Src\model\AttributeSet;
-use Src\model\Price;
+use Src\model\AttributeSetModel;
+use Src\model\PriceModel;
 
-class Product extends Model
+class ProductModel extends Model
 {
     protected $table = 'attributes';
 
@@ -24,8 +24,8 @@ class Product extends Model
                 'gallery' => Type::listOf(Type::string()),
                 'description' => Type::string(),
                 'category' => Type::string(),
-                'attributes' => Type::listOf((new AttributeSet())->getType()),
-                'prices' => Type::listOf((new Price())->getType()),
+                'attributes' => Type::listOf((new AttributeSetModel())->getType()),
+                'prices' => Type::listOf((new PriceModel())->getType()),
                 'brand' => Type::string(),
                 '__typename' => Type::string(),
             ]

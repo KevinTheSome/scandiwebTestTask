@@ -6,19 +6,17 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use Src\model\Model;
-use Src\model\Currency;
 
-class Price extends Model
+class CategoryModel extends Model
 {
     protected $table = 'attributes';
 
     public function getType()
     {
         return new ObjectType([
-            'name' => 'Price',
+            'name' => 'Category',
             'fields' => [
-                'amount' => Type::float(),
-                'currency' => Type::nonNull((new Currency)->getType()),
+                'name' => Type::string(),
                 '__typename' => Type::string(),
             ]
         ]);

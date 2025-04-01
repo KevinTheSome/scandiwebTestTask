@@ -1,13 +1,17 @@
 import { useState } from 'react'
-
+import { gql, useQuery } from 'urql';
 function App() {
-  const [count, setCount] = useState(0)
+
+  /*
+    Read this for graphql client
+    https://commerce.nearform.com/open-source/urql/docs/basics/react-preact/#setting-up-the-client
+  */
 
   return (
     <>
     <p className='text-3xl bg-amber-400'>Frontend :)</p>
     </>
-  )
+  ) 
 }
 
 export default App

@@ -3,6 +3,7 @@
 namespace Src\routes;
 
 use Src\controllers\GraphQLController;
+use Src\controllers\TestController;
 
 class Api
 {
@@ -10,10 +11,10 @@ class Api
     {
         switch ($_SERVER['REQUEST_URI']) {
             case '/test':
-                echo "test";
+                return (new TestController)->index();
                 break;
             case '/graphql':
-                (new GraphQLController)->graphql();
+                return (new GraphQLController)->graphql();
                 break;
             default:
                 echo "404";

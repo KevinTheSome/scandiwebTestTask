@@ -2,9 +2,13 @@
 
 namespace Src\controllers;
 
+use Src\database\Database;
 
 abstract class Controller
 {
-    public $dbConnection;
-    public function __construct() {}
+    protected $database;
+    public function __construct()
+    {
+        $this->database = new Database();
+    }
 }
