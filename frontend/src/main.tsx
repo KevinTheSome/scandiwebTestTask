@@ -1,5 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router";
+
 import './index.css'
 import App from './App.tsx'
 
@@ -10,10 +15,17 @@ const client = new Client({
   exchanges: [cacheExchange, fetchExchange],
 });
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+]);
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider value={client}>
-      <App />
+      <RouterProvider router={router} />
     </Provider>
   </StrictMode>,
 )
