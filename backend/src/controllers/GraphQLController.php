@@ -7,9 +7,11 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use GraphQL\Type\SchemaConfig;
+
 use Src\model\CategoryModel;
 use Src\controllers\CategoryController;
 use Src\model\ProductModel;
+use Src\controllers\ProductController;
 
 class GraphQLController extends Controller
 {
@@ -30,13 +32,19 @@ class GraphQLController extends Controller
                     'args' => [
                         'name' => ['type' => Type::string()]
                     ],
-                    // 'resolve' => function (array $root, array $args) {
-                    //     return (new CategoryController())->get($args['name']);
-                    // }
                     'resolve' => function ($root, array $args) {
-                        return (new CategoryController())->get($args['name']);
+                        return (new CategoryController())->get($this->getArreyValue($args, 'name'));
                     }
                 ],
+                'products' => [
+                    'type' => Type::listOf((new ProductModel)->getType()),
+                    'args' => [
+                        'name' => ['type' => Type::string()]
+                    ],
+                    'resolve' => function ($root, array $args) {
+                        return (new ProductController())->get($this->getArreyValue($args, 'name'));
+                    }
+                ]
             ]
         ]);
 
@@ -55,11 +63,36 @@ class GraphQLController extends Controller
         ]);
     }
 
-    public function graphql()
+    // public function graphql()
+    // {
+    //     header('Content-Type: application/json; charset=UTF-8');
+
+    //     if (empty($_POST['query'])) //check if the request has a GraphQL query
+    //     {
+    //         echo json_encode(['error' => ['message' => 'No GraphQL query found in the HTTP request']], JSON_THROW_ON_ERROR);
+    //         die();
+    //     }
+
+    //     $schema = new Schema([
+    //         'query' => $this->queryType,
+    //         'mutation' => $this->mutationType,
+    //     ]);
+
+    //     $query = strval($_POST['query']);
+
+    //     $result = GraphQL::executeQuery($schema, $query);
+    //     $output = $result->toArray();
+
+
+
+    //     echo json_encode($output, JSON_THROW_ON_ERROR);
+    // }
+
+    public function get()
     {
         header('Content-Type: application/json; charset=UTF-8');
 
-        if (empty($_POST['query'])) //check if the request has a GraphQL query
+        if (empty(json_decode(file_get_contents('php://input'), true))) //check if the request has a GraphQL query
         {
             echo json_encode(['error' => ['message' => 'No GraphQL query found in the HTTP request']], JSON_THROW_ON_ERROR);
             die();
@@ -70,9 +103,8 @@ class GraphQLController extends Controller
             'mutation' => $this->mutationType,
         ]);
 
-        $query = strval($_POST['query']);
-
-        $result = GraphQL::executeQuery($schema, $query);
+        $query = json_decode(file_get_contents('php://input'), true);
+        $result = GraphQL::executeQuery($schema, $query['query']);
         $output = $result->toArray();
 
 

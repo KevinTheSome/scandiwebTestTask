@@ -14,7 +14,7 @@ class Api
                 return (new TestController)->index();
                 break;
             case '/graphql':
-                return (new GraphQLController)->graphql();
+                return (new GraphQLController)->get();
                 break;
             default:
                 echo "404";

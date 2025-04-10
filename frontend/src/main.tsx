@@ -11,7 +11,7 @@ import App from './App.tsx'
 import { Client, Provider, cacheExchange, fetchExchange } from 'urql';
 
 const client = new Client({
-  url: 'http://localhost:8889/graphql',
+  url: 'http://localhost:8888/graphql',
   exchanges: [cacheExchange, fetchExchange],
 });
 
