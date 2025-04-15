@@ -1,14 +1,14 @@
-import { useState, useEffect, use } from "react";
-import { gql, useQuery, createRequest } from "urql";
+import { useState } from "react";
+import { gql, useQuery } from "urql";
 import Navbar from "./components/NavBar.tsx";
 import ProductHolder from "./components/ProductHolder";
-import ProductCard from "./components/ProductCard.tsx";
 import { ProductType } from "./types/ProductType.ts";
 
 function App() {
   const ProductsQuery = gql`
     {
       products {
+        product_id
         name
         category
         inStock

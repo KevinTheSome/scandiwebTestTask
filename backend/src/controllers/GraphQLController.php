@@ -30,7 +30,7 @@ class GraphQLController extends Controller
                 'categories' => [
                     'type' => Type::listOf((new CategoryModel)->getType()),
                     'args' => [
-                        'name' => ['type' => Type::string()]
+                        'name' => ['type' => Type::string()],
                     ],
                     'resolve' => function ($root, array $args) {
                         return (new CategoryController())->get($this->getArreyValue($args, 'name'));
@@ -39,10 +39,11 @@ class GraphQLController extends Controller
                 'products' => [
                     'type' => Type::listOf((new ProductModel)->getType()),
                     'args' => [
-                        'name' => ['type' => Type::string()]
+                        'name' => ['type' => Type::string()],
+                        'product_id' => ['type' => Type::string()]
                     ],
                     'resolve' => function ($root, array $args) {
-                        return (new ProductController())->get($this->getArreyValue($args, 'name'));
+                        return (new ProductController())->get($this->getArreyValue($args, 'product_id'));
                     }
                 ]
             ]

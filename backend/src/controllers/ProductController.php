@@ -9,12 +9,12 @@ class ProductController extends Controller
         parent::__construct();
     }
 
-    public function get($ProductName = null)
+    public function get($ProductId = null)
     {
-        if (empty($ProductName)) {
+        if ($ProductId === null) {
             return $this->database->query('SELECT * FROM products');
         } else {
-            return $this->database->query('SELECT * FROM products WHERE name = :name', ['name' => $ProductName]);
+            return $this->database->query('SELECT * FROM products WHERE product_id = :product_id', ['product_id' => $ProductId]);
         }
     }
 }

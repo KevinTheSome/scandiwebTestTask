@@ -18,7 +18,7 @@ class ProductModel extends Model
         return new ObjectType([
             'name' => 'Product',
             'fields' => [
-                'id' => Type::nonNull(Type::string()),
+                'product_id' => Type::nonNull(Type::string()),
                 'name' => Type::nonNull(Type::string()),
                 'inStock' => Type::boolean(),
                 'gallery' => Type::listOf(Type::string()),
