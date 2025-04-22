@@ -12,7 +12,15 @@ function App() {
         name
         category
         inStock
-        gallery
+        gallery {
+          image_url
+        }
+        prices {
+          amount
+          currency {
+            symbol
+          }
+        }
       }
     }
   `;

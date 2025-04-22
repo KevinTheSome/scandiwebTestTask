@@ -12,6 +12,8 @@ use Src\model\CategoryModel;
 use Src\controllers\CategoryController;
 use Src\model\ProductModel;
 use Src\controllers\ProductController;
+use Src\model\PriceModel;
+use Src\controllers\PriceController;
 
 class GraphQLController extends Controller
 {
@@ -40,12 +42,12 @@ class GraphQLController extends Controller
                     'type' => Type::listOf((new ProductModel)->getType()),
                     'args' => [
                         'name' => ['type' => Type::string()],
-                        'product_id' => ['type' => Type::string()]
+                        'product_id' => ['type' => Type::string()],
                     ],
                     'resolve' => function ($root, array $args) {
                         return (new ProductController())->get($this->getArreyValue($args, 'product_id'));
                     }
-                ]
+                ],
             ]
         ]);
 

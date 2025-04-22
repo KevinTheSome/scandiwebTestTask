@@ -8,17 +8,17 @@ use GraphQL\Type\Schema;
 use Src\model\Model;
 
 
-class CurrencyModel extends Model
+class GalleryModel extends Model
 {
-    protected $table = 'Currencies';
+    protected $table = 'Gallery';
 
     public function getType()
     {
         return new ObjectType([
-            'name' => 'Currency',
+            'name' => 'Gallery',
             'fields' => [
-                'label' => Type::string(),
-                'symbol' => Type::string(),
+                'product_id' => Type::string(),
+                'image_url' => Type::string(),
                 '__typename' => Type::string(),
             ]
         ]);

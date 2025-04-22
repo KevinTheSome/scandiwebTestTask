@@ -9,7 +9,7 @@ use Src\model\Model;
 
 class CategoryModel extends Model
 {
-    protected $table = 'attributes';
+    protected $table = 'Categories';
 
     public function getType()
     {
