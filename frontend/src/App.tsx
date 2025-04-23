@@ -41,6 +41,7 @@ function App() {
 
   return (
     <>
+      {console.log(data)}
       <Navbar />
       <ProductHolder products={data.products} />
     </>

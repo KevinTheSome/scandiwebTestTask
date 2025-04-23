@@ -6,7 +6,7 @@ function productCard({ product }: { product: ProductType }) {
       <a href={"/" + product.product_id}>
         <div className="bg-white w-full h-full grid hover:shadow-lg hover:bg-gray-300">
           <img
-            src="{}"
+            src={product.gallery[0].image_url}
             alt={product.name + " Image"}
             className="center aspect-square w-full h-full contrast-50"
           />
@@ -20,12 +20,12 @@ function productCard({ product }: { product: ProductType }) {
     <a href={"/" + product.product_id}>
       <div className="bg-white w-full h-full grid hover:shadow-lg hover:bg-gray-300">
         <img
-          src="{}"
+          src={product.gallery[0].image_url}
           alt={product.name + " Image"}
           className="center aspect-square w-full h-full"
         />
         <h3 className="font-extralight p-4 text-md">{product.name}</h3>
-        <p className="text-sm">{product.prices}</p>
+        <p className="text-sm">{product.prices[0].amount}$</p>
         <button className="" onClick={() => console.log(product)}>
           Add to cart
         </button>
