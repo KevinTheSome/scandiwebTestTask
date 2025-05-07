@@ -13,7 +13,7 @@ const initialCartItems = [
     quantity: 1,
     imageUrl: "https://placehold.co/100x100/e2e8f0/4a5568?text=Shorts", // Placeholder image
   },
-  {
+  { 
     id: 2,
     name: "Wayfarer",
     price: 75.0,
